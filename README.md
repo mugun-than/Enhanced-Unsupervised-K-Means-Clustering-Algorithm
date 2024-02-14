@@ -1,6 +1,6 @@
 # Enhanced-unsupervised-k-means-clustering-algorithm
 ## Overview
-An enhanced unsupervised k means clustering algorithm. The basic idea is to improve the performance unsupervised k means clustering algorithm available from the research paper by Kristina P Sinaga at IEEE. 
+An enhanced unsupervised k means clustering algorithm. The basic idea is to improve the performance of unsupervised k means clustering algorithm available from the research paper titled "Unsupevised K Means Clustering Algorithm" by Kristina P Sinaga and Miin Shen Yang at IEEE Access. 
 ## Approaches
-- Increasing the efficiency of algorithm by implementing a different distance metrics rather than usually used euclidean distance metric by reducing the computational complexity.
-- Reducing the time complexity by storing the necessary information in an array so that the algorithm need not to restart itself in each iterations. 
+- Increasing the efficiency of algorithm by implementing a different distance metrics replacing the usually used euclidean distance metric which in turn reduces the computational complexity.
+- Reducing the time complexity by implementing a data structure to keep some necessary information in each iteration to be used in the next iteration, so that the algorithm itself doesn't gets restarted in each iteration. 
