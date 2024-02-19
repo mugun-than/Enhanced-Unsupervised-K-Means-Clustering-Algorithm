@@ -6,7 +6,7 @@ y=categorical(species);
 label=grp2idx(y);
 
 cluster_n=length(unique(label));
-points_n=size(points,1);               
+points_n=size(points,1);
 points_dim=size(points,2);
 
 rng(25)
@@ -33,8 +33,8 @@ while err>=thres_km
         u(i,idx(i))=1;
     end
     u;
-    
-    
+
+
     %update cluster center
         new_clust_cen=[];
     for k=1:cluster_n
@@ -45,13 +45,13 @@ while err>=thres_km
         end
         new_clust_cen=[new_clust_cen;temp4/temp5(k)];
     end
-    
+
     error=[];
-    for k=1:cluster_n    
+    for k=1:cluster_n
         error=[error;norm(new_clust_cen(k,:)-clust_cen(k,:))];
-    end    
+    end
     err=max(error);
-        
+
 	clust_cen=new_clust_cen;
 end
 

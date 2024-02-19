@@ -2,7 +2,7 @@
 % Written by Kristina P. Sinaga (kristinasinaga57@yahoo.co.id)
 
 %% INPUTS:
-% points : input data matrix. 
+% points : input data matrix.
 % cluster_n: number of clusters
 
 
@@ -27,7 +27,7 @@ y=categorical(species);
 label=grp2idx(y);
 
 
-%% DEFINING INPUT DATA 
+%% DEFINING INPUT DATA
 
 points_n   = size(points,1);
 points_dim = size(points,2);
@@ -37,13 +37,13 @@ beta  = 1;
 gamma = 1;
 rate  = 0;
 
-%% Initializations 
+%% Initializations
 
 cluster_n = points_n;
-clust_cen = points+0.0001; 
-alpha     = ones(1,cluster_n)*1/cluster_n; 
+clust_cen = points+0.0001;
+alpha     = ones(1,cluster_n)*1/cluster_n;
 err       = 10;
- 
+
 t_max     = 100;
 
 
@@ -51,11 +51,11 @@ c_history=[];
 
 while and(cluster_n>1,err>=thres)
 % for itr=1:8
-    
+
     rate = rate + 1;
-    
+
     %% Step 2 : Compute membership
-    
+
     u=zeros(points_n,cluster_n);
     D7=[];
     for k=1:cluster_n
@@ -67,7 +67,7 @@ while and(cluster_n>1,err>=thres)
         D6=bsxfun(@minus,D4,D5);
         D7=[D7 D6];
     end
-    
+
     if rate==1
        D8=D7;
        D7(logical(eye(size(D7))))=NaN;
@@ -76,27 +76,27 @@ while and(cluster_n>1,err>=thres)
     else
        [val idx]=min(D7,[],2);
     end
-    
+
     for i=1:points_n
         u(i,idx(i))=1;
     end
     u;
-    
-    
+
+
     %% STEP 3: Compute gamma
-    
+
     gamma = exp(-cluster_n/450);
-    
-    %% STEP 4: Update alpha 
-    
+
+    %% STEP 4: Update alpha
+
     new_alpha=sum(u,1)/points_n+beta/gamma*alpha.*(log(alpha)-sum(alpha.*log(alpha)));
-    
+
     %% STEP 5: Compute beta
-    
+
     a=1/rate;
     eta=min(1,a^floor(points_dim/2-1));
-    
-    temp9=0; 
+
+    temp9=0;
     for k=1:cluster_n
         temp8=exp(-eta*points_n*abs(new_alpha(k)-alpha(k)));
         temp9=temp9+temp8;
@@ -107,12 +107,12 @@ while and(cluster_n>1,err>=thres)
     temp12=temp10/(-max(alpha)*temp11);
 
     new_beta=min(temp9,temp12);
-    
-    
+
+
     %% STEP 6: Update number of clusters
-    
+
     index=find(new_alpha<=1/points_n);
-    
+
     %% ADJUST ALPHA
     adj_alpha=new_alpha;
     adj_alpha(index)=[];
@@ -122,24 +122,24 @@ while and(cluster_n>1,err>=thres)
         new_alpha=alpha;
         break;
     end
-    
+
     %% UPDATE NUMBER OF CLUSTER
     new_cluster_n=size(new_alpha,2);
-    
+
     %% ADJUST MEMBERSHIP (U)
     adj_u=u;
     adj_u(:,index)=[];
     adj_u=bsxfun(@rdivide,adj_u,sum(adj_u,2));
     adj_u(isnan(adj_u))=0;
     new_u=adj_u;
-    
+
     if and(rate>=60,new_cluster_n-cluster_n==0)
         new_beta=0;
     end
-    
-    
+
+
     %% Update Cluster Centers
-    
+
     new_clust_cen=[];
     for k=1:new_cluster_n
             temp4=zeros(1,points_dim);
@@ -151,25 +151,25 @@ while and(cluster_n>1,err>=thres)
         new_clust_cen=[new_clust_cen; temp4/temp5];
     end
     new_clust_cen(isnan(new_clust_cen))=sum(mean(points));
-    
-    
+
+
     %% STEP 8: Convergence criteria
 
     error=[];
-    for k=1:new_cluster_n    
+    for k=1:new_cluster_n
         error=[error;norm(new_clust_cen(k,:)-clust_cen(k,:))];
-    end   
-    
+    end
+
     err=max(error);
-    
-    
+
+
     clust_cen=new_clust_cen;
     cluster_n=new_cluster_n;
     alpha=new_alpha;
     beta=new_beta;
     u=new_u;
     c_history=[c_history cluster_n];
-    
+
 end
 
 

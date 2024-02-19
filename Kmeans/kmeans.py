@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 from IPython.display import clear_output
 import time
 
-players = pd.read_csv("./Dataset/players_22.csv")
+players = pd.read_csv(".././Dataset/players_22.csv")
 features = ["overall", "potential", "wage_eur", "value_eur", "age"]
 players = players.dropna(subset=features)
 data = players[features].copy()
