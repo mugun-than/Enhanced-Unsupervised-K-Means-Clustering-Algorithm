@@ -16,7 +16,7 @@ def initilaize():
     players = players.dropna(subset=features)
     dataset = players[features].copy()
 
-    dataset = ((dataset - dataset.min()) / (dataset.max() - dataset.min())) * 10 + 1
+    dataset = ((dataset - dataset.min()) / (dataset.max() - dataset.min())) * 9 + 1
     plt.ion()
     return dataset
 
