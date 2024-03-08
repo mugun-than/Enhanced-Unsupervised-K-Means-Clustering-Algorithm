@@ -5,6 +5,8 @@ import matplotlib.pyplot as plt
 from IPython.display import clear_output
 import time
 
+iteration = 1
+
 # Importing iris dataset
 def initilaise():
     players = pd.read_csv(".././Dataset/iris.csv")
@@ -69,23 +71,11 @@ def kmeans(dataset, centroid_count):
 
 # Finding optimal number of clusters (k)
 def start_clustering(data):
-    plt.ioff()
-    # Initialize an empty list to store the within-cluster sum of squares (WCSS)
     wcss = []
-
-    # Try cluster sizes from 1 to 10
     for i in range(1, 11):
         inertia = kmeans(data, i)
-        # Append WCSS to list
-        print(str(i)+"  "+str(inertia))
         wcss.append(inertia)
-
-    # Plotting the elbow method graph
-    plt.plot(range(1, 11), wcss)
-    plt.title('Elbow Method')
-    plt.xlabel('Number of clusters')
-    plt.ylabel('WCSS')
-    plt.show()
+    return wcss
 
 # Terminating the process
 def end_clustering():
@@ -93,8 +83,15 @@ def end_clustering():
     time.sleep(2)
     plt.close()
 
+# Plotting elbow method graph
+def plot_elbow(WCSS):
+    plt.plot(range(1, len(WCSS) + 1), WCSS)
+    plt.title('Elbow Method')
+    plt.xlabel('Number of clusters')
+    plt.ylabel('WCSS')
+    plt.show()
+    end_clustering()
+
 # Main method
 data = initilaise()
-iteration = 1
-start_clustering(data)
-end_clustering()
+plot_elbow(start_clustering(data))
