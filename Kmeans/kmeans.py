@@ -4,8 +4,8 @@ from sklearn.decomposition import PCA
 import matplotlib.pyplot as plt
 from IPython.display import clear_output
 import time
-
-centroid_count = 2
+start_time = time.time()
+centroid_count = 3
 
 # Importing the iris dataset
 def initilaise():
@@ -15,7 +15,7 @@ def initilaise():
     dataset = players[features].copy()
 
     dataset = ((dataset - dataset.min()) / (dataset.max() - dataset.min())) * 9 + 1
-    plt.ion()
+    #plt.ion()
     return dataset
 
 # Initialising centroids
@@ -68,8 +68,10 @@ def end_clustering():
     plt.ioff()
     time.sleep(2)
     plt.close()
+    print(f"--- {time.time() - start_time:.6f} seconds ---")
 
 # Main method
 data = initilaise()
 kmeans(data)
 end_clustering()
+

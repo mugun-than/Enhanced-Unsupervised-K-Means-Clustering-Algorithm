@@ -94,4 +94,5 @@ def plot_elbow(WCSS):
 
 # Main method
 data = initilaise()
+
 plot_elbow(start_clustering(data))

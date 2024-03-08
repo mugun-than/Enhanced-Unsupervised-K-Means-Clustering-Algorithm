@@ -4,7 +4,7 @@ from sklearn.decomposition import PCA
 import matplotlib.pyplot as plt
 from IPython.display import clear_output
 import time
-
+start_time = time.time()
 iteration = 1
 
 # Importing iris dataset
@@ -27,7 +27,8 @@ def random_centroids(dataset, k):
 
 # Clustering the data points with initialised centroids
 def get_labels(dataset, centroids):
-    distances = centroids.apply(lambda x: np.sqrt(((dataset - x) ** 2).sum(axis=1)))
+    #distances = centroids.apply(lambda x: np.sqrt(((dataset - x) ** 2).sum(axis=1)))
+    distances = centroids.apply(lambda x: (dataset - x).abs().sum(axis=1))
     return distances.idxmin(axis=1)
 
 # Updating centroids
@@ -97,6 +98,7 @@ def end_clustering():
     plt.ioff()
     time.sleep(3)
     plt.close()
+    print(f"--- {time.time() - start_time:.6f} seconds ---")
 
 # Main method
 data = initilaise()
