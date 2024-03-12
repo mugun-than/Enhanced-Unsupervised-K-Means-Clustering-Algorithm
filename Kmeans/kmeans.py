@@ -5,7 +5,8 @@ import matplotlib.pyplot as plt
 from IPython.display import clear_output
 import time
 start_time = time.time()
-centroid_count = 3
+centroid_count = 10
+
 
 # Importing the iris dataset
 def initilaise():
@@ -60,14 +61,14 @@ def kmeans(dataset):
 
         labels = get_labels(dataset, centroids)
         centroids = new_centroids(dataset, labels)
-        plot_clusters(dataset, labels, centroids, iteration)
+        #plot_clusters(dataset, labels, centroids, iteration)
         iteration += 1
 
 # Terminating the clustering process
 def end_clustering():
-    plt.ioff()
+    """plt.ioff()
     time.sleep(2)
-    plt.close()
+    plt.close()"""
     print(f"--- {time.time() - start_time:.6f} seconds ---")
 
 # Main method

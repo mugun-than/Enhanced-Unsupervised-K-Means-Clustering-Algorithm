@@ -9,8 +9,8 @@ iteration = 1
 
 # Importing iris dataset
 def initilaise():
-    players = pd.read_csv(".././Dataset/iris.csv")
-    features = ["sepal_length", "sepal_width", "petal_length", "petal_width"]
+    players = pd.read_csv(".././Dataset/Wholesale_customers.csv")
+    features = ["Fresh", "Milk", "Grocery", "Frozen", "Detergents_Paper", "Delicassen"]
     players = players.dropna(subset=features)
     dataset = players[features].copy()
 
@@ -103,3 +103,4 @@ def end_clustering():
 data = initilaise()
 start_clustering(data)
 end_clustering()
+
