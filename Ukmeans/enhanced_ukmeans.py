@@ -1,3 +1,9 @@
+# Average running time - 3.053334
+# Traditional kmeans is 0.5 times efficient as this ukmeans
+# Distance metrics updated
+# Elbow method implemented
+# Optimised elbow method
+
 import pandas as pd
 import numpy as np
 from sklearn.decomposition import PCA
@@ -80,26 +86,27 @@ def start_clustering(data):
             x = wcss[0] - wcss[1]
             u = wcss[i - 2] - wcss[i - 1]
             if u < x / 2.5:
-                time.sleep(3)
+
                 return wcss
 
 # Plotting elbow method graph
 def plot_elbow(WCSS):
-    plt.plot(range(1, len(WCSS) + 1), WCSS)
+    """plt.plot(range(1, len(WCSS) + 1), WCSS)
     plt.title('Elbow Method')
     plt.xlabel('Number of clusters')
     plt.ylabel('WCSS')
-    plt.show()
+    plt.pause(2)"""
+    print(f'Optimal number of clusters - {len(WCSS)}')
     end_clustering()
 
 # Terminating the process
 def end_clustering():
-    """plt.ioff()
+    plt.ioff()
     time.sleep(3)
-    plt.close()"""
+    plt.close()
     print(f"--- {time.time() - start_time:.6f} seconds ---")
 
 # Main method
 data = initilaise()
-start_clustering(data)
-end_clustering()
+plot_elbow(start_clustering(data))
+

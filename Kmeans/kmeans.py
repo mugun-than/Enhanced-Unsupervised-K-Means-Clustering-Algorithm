@@ -1,3 +1,5 @@
+# Average running time - 2.0585486
+
 import pandas as pd
 import numpy as np
 from sklearn.decomposition import PCA
@@ -5,7 +7,7 @@ import matplotlib.pyplot as plt
 from IPython.display import clear_output
 import time
 start_time = time.time()
-centroid_count = 10
+centroid_count = 3
 
 
 # Importing the iris dataset
@@ -66,9 +68,9 @@ def kmeans(dataset):
 
 # Terminating the clustering process
 def end_clustering():
-    """plt.ioff()
+    plt.ioff()
     time.sleep(2)
-    plt.close()"""
+    plt.close()
     print(f"--- {time.time() - start_time:.6f} seconds ---")
 
 # Main method
