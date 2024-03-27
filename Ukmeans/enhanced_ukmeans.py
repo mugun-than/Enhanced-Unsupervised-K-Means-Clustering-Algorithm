@@ -1,9 +1,3 @@
-# Average running time - 3.053334
-# Traditional kmeans is 0.5 times efficient as this ukmeans
-# Distance metrics updated
-# Elbow method implemented
-# Optimised elbow method
-
 import pandas as pd
 import numpy as np
 from sklearn.decomposition import PCA
@@ -14,13 +8,13 @@ start_time = time.time()
 iteration = 1
 
 # Importing iris dataset
-def initilaise():
-    players = pd.read_csv(".././Dataset/iris.csv")
+def initialise():
+    flowers = pd.read_csv(".././Dataset/iris.csv")
     features = ["sepal_length", "sepal_width", "petal_length", "petal_width"]
-    players = players.dropna(subset=features)
-    dataset = players[features].copy()
-
+    flowers = flowers.dropna(subset=features)
+    dataset = flowers[features].copy()
     dataset = ((dataset - dataset.min()) / (dataset.max() - dataset.min())) * 9 + 1
+    plt.ion()
     return dataset
 
 # Intialising centroids
@@ -67,7 +61,6 @@ def kmeans(dataset, centroid_count):
         centroids = new_centroids(dataset, labels)
         #plot_clusters(dataset, labels, centroids, iteration, centroid_count)
         iteration += 1
-
     inertia = 0
     for centroid in centroids.columns:
         cluster_points = dataset[labels == centroid]
@@ -86,7 +79,6 @@ def start_clustering(data):
             x = wcss[0] - wcss[1]
             u = wcss[i - 2] - wcss[i - 1]
             if u < x / 2.5:
-
                 return wcss
 
 # Plotting elbow method graph
@@ -95,18 +87,17 @@ def plot_elbow(WCSS):
     plt.title('Elbow Method')
     plt.xlabel('Number of clusters')
     plt.ylabel('WCSS')
-    plt.pause(2)"""
+    plt.pause(1)"""
     print(f'Optimal number of clusters - {len(WCSS)}')
     end_clustering()
 
 # Terminating the process
 def end_clustering():
     plt.ioff()
-    time.sleep(3)
     plt.close()
     print(f"--- {time.time() - start_time:.6f} seconds ---")
 
 # Main method
-data = initilaise()
+data = initialise()
 plot_elbow(start_clustering(data))
 

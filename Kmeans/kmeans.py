@@ -1,5 +1,3 @@
-# Average running time - 2.0585486
-
 import pandas as pd
 import numpy as np
 from sklearn.decomposition import PCA
@@ -8,18 +6,16 @@ from IPython.display import clear_output
 import time
 start_time = time.time()
 centroid_count = 3
-
-
 # Importing the iris dataset
-def initilaise():
-    players = pd.read_csv(".././Dataset/iris.csv")
+def initialise():
+    flowers = pd.read_csv(".././Dataset/iris.csv")
     features = ["sepal_length", "sepal_width", "petal_length", "petal_width"]
-    players = players.dropna(subset=features)
-    dataset = players[features].copy()
-
+    flowers = flowers.dropna(subset=features)
+    dataset = flowers[features].copy()
     dataset = ((dataset - dataset.min()) / (dataset.max() - dataset.min())) * 9 + 1
-    #plt.ion()
+    plt.ion()
     return dataset
+
 
 # Initialising centroids
 def random_centroids(dataset, k):
@@ -69,12 +65,11 @@ def kmeans(dataset):
 # Terminating the clustering process
 def end_clustering():
     plt.ioff()
-    time.sleep(2)
     plt.close()
     print(f"--- {time.time() - start_time:.6f} seconds ---")
 
 # Main method
-data = initilaise()
+data = initialise()
 kmeans(data)
 end_clustering()
 

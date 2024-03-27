@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 from sklearn.cluster import KMeans
 #Load either one of the dataset from the two given below
 # Load the Iris dataset
+"""
 customers = pd.read_csv(".././Dataset/Wholesale_customers.csv")
 features = ["Fresh", "Milk", "Grocery", "Frozen", "Detergents_Paper", "Delicassen"]
 customers = customers.dropna(subset=features)
@@ -16,7 +17,7 @@ flowers = flowers.dropna(subset=features)
 dataset = flowers[features].copy()
 dataset = ((dataset - dataset.min()) / (dataset.max() - dataset.min())) * 9 + 1
 
-"""
+
 # Traditional elbow method
 wcss = []
 for i in range(1, 11):
@@ -25,7 +26,7 @@ for i in range(1, 11):
     wcss.append(kmeans.inertia_)
 
 plt.plot(range(1, 11), wcss)
-plt.title('Elbow Method')
+plt.title('Iris')
 plt.xlabel('Number of clusters')
 plt.ylabel('WCSS')
 plt.show()

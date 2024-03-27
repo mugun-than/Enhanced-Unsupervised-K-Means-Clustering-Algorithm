@@ -5,16 +5,17 @@ import matplotlib.pyplot as plt
 from IPython.display import clear_output
 import time
 
+start_time = time.time()
 iteration = 1
 
 # Importing iris dataset
-def initilaise():
-    players = pd.read_csv(".././Dataset/iris.csv")
+def initialise():
+    flowers = pd.read_csv(".././Dataset/iris.csv")
     features = ["sepal_length", "sepal_width", "petal_length", "petal_width"]
-    players = players.dropna(subset=features)
-    dataset = players[features].copy()
-
+    flowers = flowers.dropna(subset=features)
+    dataset = flowers[features].copy()
     dataset = ((dataset - dataset.min()) / (dataset.max() - dataset.min())) * 9 + 1
+    plt.ion()
     return dataset
 
 # Intialising centroids
@@ -36,12 +37,12 @@ def new_centroids(dataset, labels):
     return centroids
 
 # Plotting clusters
-def plot_clusters(dataset, labels, centroids, iteration):
+def plot_clusters(dataset, labels, centroids, iteration, centroid_count):
     pca = PCA(n_components=2)
     data_2d = pca.fit_transform(dataset)
     centroids_2d = pca.transform(centroids.T)
     clear_output(wait=True)
-    plt.title(f'Iteration {iteration}')
+    plt.title(f'Iteration {iteration} K={centroid_count}')
     plt.scatter(x=data_2d[:, 0], y=data_2d[:, 1], c=labels)
     plt.scatter(x=centroids_2d[:, 0], y=centroids_2d[:, 1])
     plt.pause(0.1)
@@ -53,13 +54,14 @@ def kmeans(dataset, centroid_count):
     max_iterations = 100
     centroids = random_centroids(dataset, centroid_count)
     old_centroids = pd.DataFrame()
+    labels = get_labels(dataset, centroids)
 
     while iteration < max_iterations and not centroids.equals(old_centroids):
         old_centroids = centroids
 
         labels = get_labels(dataset, centroids)
         centroids = new_centroids(dataset, labels)
-        plot_clusters(dataset, labels, centroids, iteration)
+        #plot_clusters(dataset, labels, centroids, iteration, centroid_count)
         iteration += 1
 
     inertia = 0
@@ -75,24 +77,25 @@ def start_clustering(data):
     for i in range(1, 11):
         inertia = kmeans(data, i)
         wcss.append(inertia)
+    print(wcss)
     return wcss
 
 # Terminating the process
 def end_clustering():
     plt.ioff()
-    time.sleep(2)
     plt.close()
+    print(f"--- {time.time() - start_time:.6f} seconds ---")
 
 # Plotting elbow method graph
 def plot_elbow(WCSS):
-    plt.plot(range(1, len(WCSS) + 1), WCSS)
+    """plt.plot(range(1, len(WCSS) + 1), WCSS)
     plt.title('Elbow Method')
     plt.xlabel('Number of clusters')
     plt.ylabel('WCSS')
-    plt.show()
+    plt.show()"""
     end_clustering()
 
 # Main method
-data = initilaise()
+data = initialise()
 
 plot_elbow(start_clustering(data))
