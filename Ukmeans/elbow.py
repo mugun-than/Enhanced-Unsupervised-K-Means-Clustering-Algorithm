@@ -10,13 +10,18 @@ customers = customers.dropna(subset=features)
 dataset = customers[features].copy()
 dataset = ((dataset - dataset.min()) / (dataset.max() - dataset.min())) * 9 + 1
 
-"""
 flowers = pd.read_csv(".././Dataset/iris.csv")
 features = ["sepal_length", "sepal_width", "petal_length", "petal_width"]
 flowers = flowers.dropna(subset=features)
 dataset = flowers[features].copy()
 dataset = ((dataset - dataset.min()) / (dataset.max() - dataset.min())) * 9 + 1
-
+"""
+wine = pd.read_csv(".././Dataset/WineQT.csv")
+features = ["fixed acidity", "volatile acidity", "citric acid", "residual sugar", "chlorides", "free sulfur dioxide",
+            "total sulfur dioxide", "density", "pH", "sulphates", "alcohol"]
+wine = wine.dropna(subset=features)
+dataset = wine[features].copy()
+dataset = ((dataset - dataset.min()) / (dataset.max() - dataset.min())) * 9 + 1
 
 # Traditional elbow method
 wcss = []
@@ -26,7 +31,7 @@ for i in range(1, 11):
     wcss.append(kmeans.inertia_)
 
 plt.plot(range(1, 11), wcss)
-plt.title('Iris')
+plt.title('Wine')
 plt.xlabel('Number of clusters')
 plt.ylabel('WCSS')
 plt.show()

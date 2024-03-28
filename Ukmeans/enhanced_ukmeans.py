@@ -9,10 +9,10 @@ iteration = 1
 
 # Importing iris dataset
 def initialise():
-    flowers = pd.read_csv(".././Dataset/iris.csv")
-    features = ["sepal_length", "sepal_width", "petal_length", "petal_width"]
-    flowers = flowers.dropna(subset=features)
-    dataset = flowers[features].copy()
+    customers = pd.read_csv(".././Dataset/Wholesale_customers.csv")
+    features = ["Fresh", "Milk", "Grocery", "Frozen", "Detergents_Paper", "Delicassen"]
+    customers = customers.dropna(subset=features)
+    dataset = customers[features].copy()
     dataset = ((dataset - dataset.min()) / (dataset.max() - dataset.min())) * 9 + 1
     plt.ion()
     return dataset
