@@ -9,10 +9,10 @@ iteration = 1
 
 # Importing iris dataset
 def initialise():
-    customers = pd.read_csv(".././Dataset/Wholesale_customers.csv")
-    features = ["Fresh", "Milk", "Grocery", "Frozen", "Detergents_Paper", "Delicassen"]
-    customers = customers.dropna(subset=features)
-    dataset = customers[features].copy()
+    flowers = pd.read_csv(".././Dataset/iris.csv")
+    features = ["sepal_length", "sepal_width", "petal_length", "petal_width"]
+    flowers = flowers.dropna(subset=features)
+    dataset = flowers[features].copy()
     dataset = ((dataset - dataset.min()) / (dataset.max() - dataset.min())) * 9 + 1
     plt.ion()
     return dataset
@@ -78,7 +78,7 @@ def start_clustering(data):
         if i > 2:
             x = wcss[0] - wcss[1]
             u = wcss[i - 2] - wcss[i - 1]
-            if u < x / 2.5:
+            if u < x / 10:
                 return wcss
 
 # Plotting elbow method graph
