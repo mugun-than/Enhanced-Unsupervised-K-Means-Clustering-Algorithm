@@ -53,14 +53,16 @@ def kmeans(dataset, centroid_count):
     max_iterations = 100
     centroids = random_centroids(dataset, centroid_count)
     old_centroids = pd.DataFrame()
+    labels = get_labels(dataset, centroids)
 
     while iteration < max_iterations and not centroids.equals(old_centroids):
         old_centroids = centroids
 
         labels = get_labels(dataset, centroids)
         centroids = new_centroids(dataset, labels)
-        #plot_clusters(dataset, labels, centroids, iteration, centroid_count)
+        plot_clusters(dataset, labels, centroids, iteration, centroid_count)
         iteration += 1
+    time.sleep(2)
     inertia = 0
     for centroid in centroids.columns:
         cluster_points = dataset[labels == centroid]
@@ -79,6 +81,8 @@ def start_clustering(data):
             x = wcss[0] - wcss[1]
             u = wcss[i - 2] - wcss[i - 1]
             if u < x / 10:
+                kmeans(data, i-1)
+                print(f'Optimal number of clusters (k) - {i-1}')
                 return wcss
 
 # Plotting elbow method graph
@@ -88,7 +92,6 @@ def plot_elbow(WCSS):
     plt.xlabel('Number of clusters')
     plt.ylabel('WCSS')
     plt.pause(1)"""
-    print(f'Optimal number of clusters - {len(WCSS)}')
     end_clustering()
 
 # Terminating the process
